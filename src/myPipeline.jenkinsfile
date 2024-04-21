@@ -1,9 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('Stage 1') {
+        stage('Console Test') {
             steps {
-                echo 'Hello world!'
+                echo 'Pipeline is Running!'
+                echo 'Go to next step!'
+            }
+        }
+        stage('check users') {
+            steps {
+               sh 'ls -lh /home/'
             }
         }
     }
