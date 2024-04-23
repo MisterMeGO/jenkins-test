@@ -18,15 +18,15 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-                echo 'Start deployment application'
-                echo 'Distributive version: {params.distr_version}'
-                echo 'Host List: {params.hosts_list}'
+                echo "Start deployment application"
+                echo "Distributive version: $params.distr_version"
+                echo "Host List: $params.hosts_list"
             }
         }
         stage('Show Site Parameters') {
             steps {
-                echo 'Password is: {params.password}'
-                echo 'Site: {params.site}'
+                echo "Password is: $params.password"
+                echo "Site: $params.site"
             }
         }
     }
