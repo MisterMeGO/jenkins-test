@@ -2,23 +2,32 @@ pipeline {
     agent any
 
     parameters {
-        booleanParam(name: "dryrun", defaultValue: true, description: "Тестовый запуск")
-        string(name: "version", defaultValue: "r48", trim: true, description: "Введите версию компонента")
-        text(name: "releaseNotes", defaultValue: "Добавлены новые feature", description: "Описание изменений в релизе")
-        password(name: "password", defaultValue: "changeme", description: "Введите пароль")
-        choice(name: "env", choices: ["PROD", "DEV", "UAT"], description: "Sample multi-choice parameter")
+        booleanParam(name: "set_configs", defaultValue: false, description: "Устанавливает только конфигурацию, без делпоя")
+        string(name: "distr_version", defaultValue: "D-20.001.08-1", trim: true, description: "Введите версию приложения")
+        text(name: "hosts_list", defaultValue: "", description: "Список хостов, на которые будет установлена новая версия приложения")
+        password(name: "password", defaultValue: "", description: "Введите пароль от пользователя \'jenkins-deploy\'")
+        choice(name: "site", choices: ["IFT", "NT", "PSI", "PROM"], description: "Выберете стенд, на который будет установлена новая версия приложения")
     }
 
     stages {
-        stage('Create Prometheus folder') {
+        stage('Set config to application') {
+            when {
+                expression {parameters.set_configs}
+            }
             steps {
-                sh 'mkdir prometheus'
+                echo 'Setting config on prometheus'
             }
         }
-        stage('Create config file') {
+        stage('Deployment') {
             steps {
-                sh 'touch prometheus/prometheus.cfg'
+                echo 'Start deployment application'
+                echo 'Distributive version: $parameters.distr_version'
+                echo 'Host List: $parameters.hosts_list'
             }
+        }
+        stage('Show Site Parameters') {
+            echo 'Password is: $parameters.password'
+            echo 'Site: $parameters.site'
         }
     }
 }
