@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     parameters {
         booleanParam(name: "set_configs", defaultValue: false, description: "Устанавливает только конфигурацию, без делпоя")
         string(name: "distr_version", defaultValue: "D-20.001.08-1", trim: true, description: "Введите версию приложения")
@@ -8,11 +7,10 @@ pipeline {
         password(name: "password", defaultValue: "", description: "Введите пароль от пользователя \'jenkins-deploy\'")
         choice(name: "site", choices: ["IFT", "NT", "PSI", "PROM"], description: "Выберете стенд, на который будет установлена новая версия приложения")
     }
-
     stages {
         stage('Set config to application') {
             when {
-                expression {parameters.set_configs}
+                expression {params.set_configs}
             }
             steps {
                 echo 'Setting config on prometheus'
@@ -21,14 +19,14 @@ pipeline {
         stage('Deployment') {
             steps {
                 echo 'Start deployment application'
-                echo 'Distributive version: $parameters.distr_version'
-                echo 'Host List: $parameters.hosts_list'
+                echo 'Distributive version: $params.distr_version'
+                echo 'Host List: $params.hosts_list'
             }
         }
         stage('Show Site Parameters') {
             steps {
-                echo 'Password is: $parameters.password'
-                echo 'Site: $parameters.site'
+                echo 'Password is: $params.password'
+                echo 'Site: $params.site'
             }
         }
     }
