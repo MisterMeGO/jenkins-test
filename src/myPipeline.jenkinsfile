@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        booleanParam(name: "set_configs", defaultValue: false, description: "Устанавливает только конфигурацию, без делпоя")
+        booleanParam(name: "set_configs", defaultValue: false, description: "Устанавливает только конфигурацию, без деплоя")
         string(name: "distr_version", defaultValue: "D-20.001.08-1", trim: true, description: "Введите версию приложения")
         text(name: "hosts_list", defaultValue: "", description: "Список хостов, на которые будет установлена новая версия приложения")
         password(name: "password", defaultValue: "", description: "Введите пароль от пользователя \'jenkins-deploy\'")
@@ -19,14 +19,14 @@ pipeline {
         stage('Deployment') {
             steps {
                 echo 'Start deployment application'
-                echo 'Distributive version: ${params.distr_version}'
-                echo 'Host List: ${params.hosts_list}'
+                echo 'Distributive version: {params.distr_version}'
+                echo 'Host List: {params.hosts_list}'
             }
         }
         stage('Show Site Parameters') {
             steps {
-                echo 'Password is: ${params.password}'
-                echo 'Site: ${params.site}'
+                echo 'Password is: {params.password}'
+                echo 'Site: {params.site}'
             }
         }
     }
