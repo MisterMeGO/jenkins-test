@@ -26,8 +26,10 @@ pipeline {
             }
         }
         stage('Show Site Parameters') {
-            echo 'Password is: $parameters.password'
-            echo 'Site: $parameters.site'
+            steps {
+                echo 'Password is: $parameters.password'
+                echo 'Site: $parameters.site'
+            }
         }
     }
 }
